@@ -12,13 +12,20 @@ resource "google_compute_instance" "default" {
     }
   }
 
+  tags = ["ssh"]
+
   network_interface {
+    stack_type = "IPV4_IPV6"
     subnetwork = google_compute_subnetwork.subnetwork-internal-ipv6.name
+    access_config {}
+    # ipv6_access_config {
+    #   network_tier = "STANDARD"
+    # }
 
   }
 
   metadata = {
-    ssh-keys = var.ssh_key
+    ssh-keys = "${var.ssh_user}:${var.ssh_key}"
   }
   metadata_startup_script = "echo hi > /test.txt"
 

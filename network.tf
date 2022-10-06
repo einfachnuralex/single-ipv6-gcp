@@ -8,6 +8,7 @@ resource "google_compute_subnetwork" "subnetwork-internal-ipv6" {
   ipv6_access_type = "INTERNAL"
 
   network       = google_compute_network.custom-test.id
+
 }
 
 resource "google_compute_network" "custom-test" {
@@ -16,16 +17,19 @@ resource "google_compute_network" "custom-test" {
   enable_ula_internal_ipv6 = true
 }
 
-# resource "google_compute_firewall_policy_rule" "default" {
-#   priority = 9000
-#   action = "allow"
-#   direction = "INGRESS"
-#   disabled = false
-#   match {
-#     layer4_configs {
-#       ip_protocol = "tcp"
-#       ports = [22]
-#     }
-#     dest_ip_ranges = ["11.100.0.1/32"]
-#   }
-# }
+
+resource "google_compute_firewall" "default" {
+  name    = "test-ssh"
+  network = google_compute_network.custom-test.name
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  target_tags = ["ssh"]
+}
