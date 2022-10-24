@@ -25,7 +25,7 @@ resource "google_compute_firewall" "default" {
   allow {
     protocol = "icmp"
   }
-
+  source_tags = [ "ssh" ]
   allow {
     protocol = "tcp"
     ports    = ["22"]
