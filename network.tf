@@ -5,7 +5,7 @@ resource "google_compute_subnetwork" "subnetwork-internal-ipv6" {
   region        = "europe-west3"
 
   stack_type       = "IPV4_IPV6"
-  ipv6_access_type = "INTERNAL"
+  ipv6_access_type = "EXTERNAL"
 
   network       = google_compute_network.custom-test.id
 
@@ -14,7 +14,7 @@ resource "google_compute_subnetwork" "subnetwork-internal-ipv6" {
 resource "google_compute_network" "custom-test" {
   name                    = "internal-ipv6-test-network"
   auto_create_subnetworks = false
-  enable_ula_internal_ipv6 = true
+  enable_ula_internal_ipv6 = false
 }
 
 
