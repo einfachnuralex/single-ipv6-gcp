@@ -27,6 +27,6 @@ resource "google_compute_instance" "default" {
   metadata = {
     ssh-keys = "${var.ssh_user}:${var.ssh_key}"
   }
-  metadata_startup_script = "echo hi > /test.txt"
+  metadata_startup_script = "apt update && apt install -y make docker.io golang"
 
 }
