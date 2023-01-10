@@ -1,6 +1,6 @@
 resource "google_compute_instance" "default" {
   name         = "test"
-  machine_type = "e2-medium"
+  machine_type = "c2d-highcpu-8"
   zone         = "europe-west3-c"
   can_ip_forward = true
 
@@ -27,6 +27,6 @@ resource "google_compute_instance" "default" {
   metadata = {
     ssh-keys = "${var.ssh_user}:${var.ssh_key}"
   }
-  metadata_startup_script = "apt update && apt install -y make docker.io golang"
+  metadata_startup_script = "apt update && apt install -y make docker.io golang && gpasswd -a ${var.ssh_user} docker"
 
 }
